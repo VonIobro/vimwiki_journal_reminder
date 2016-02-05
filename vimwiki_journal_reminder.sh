@@ -16,6 +16,8 @@
 ## Designate your journal folder location
 JOURNALDIR="/Users/organized/Documents/wiki/diary"    
 
+attempts=3 # The number of attempts a user is allowed before process exits
+
 DATE=$(date +"%Y-%m-%d")
 CURJOURNAL="$DATE.wiki"
 TIME=$(date +"%H:%M")
@@ -99,6 +101,13 @@ function get_selection
     : $((secs--)) # subtract one sec from timer
   done
 
+  # Count number of attempts by the user
+  if [ $attempts -eq 1 ]; then
+    echo "Error understanding input, or no response."
+    echo "Try again later."
+    exit 1
+  fi
+
   process_selection
 }
 
@@ -127,6 +136,7 @@ function process_selection
     *)
       echo "Option not recognized. Try again."
       unset OPTIONSELECTED    # Clear var
+      : $((attempts--))
       get_selection           # GOTO 10, err, go back and try again
       ;;
   esac
