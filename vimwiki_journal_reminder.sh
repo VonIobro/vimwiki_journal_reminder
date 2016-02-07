@@ -21,7 +21,8 @@ attempts=3 # The number of attempts a user is allowed before process exits
 DATE=$(date +"%Y-%m-%d")
 CURJOURNAL="$DATE.wiki"
 TIME=$(date +"%H:%M")
-TEMPDATE="== $TIME =="        # formats timestamp as h2 vimwiki link
+TEMPDATE="= $DATE ="          # formats date as h1 vimwiki link
+TEMPTIME="== $TIME =="        # formats timestamp as h2 vimwiki link
 
 ## Update the time in the most current journal files
 function update_journal_date
@@ -38,12 +39,13 @@ function update_journal_date
   if [ -f $JOURNALDIR/$CURJOURNAL ]
     then
       # Append to journal file
-      echo "$TEMPDATE" >> "$JOURNALDIR/$CURJOURNAL"
+      echo "$TEMPTIME" >> "$JOURNALDIR/$CURJOURNAL"
     else
       # Create journal file
       touch $JOURNALDIR/$CURJOURNAL
       echo "Created $JOURNALDIR/$CURJOURNAL"
       echo "$TEMPDATE" > "$JOURNALDIR/$CURJOURNAL"
+      echo "$TEMPTIME" >> "$JOURNALDIR/$CURJOURNAL"
   fi
 }
 
