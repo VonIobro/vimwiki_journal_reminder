@@ -22,7 +22,7 @@ DATE=$(date +"%Y-%m-%d")
 CURJOURNAL="$DATE.wiki"
 TIME=$(date +"%H:%M")
 TEMPDATE="= $DATE ="          # formats date as h1 vimwiki link
-TEMPTIME="== $TIME =="        # formats timestamp as h2 vimwiki link
+TEMPTIME="\n== $TIME =="        # formats timestamp as h2 vimwiki link
 
 ## Update the time in the most current journal files
 function update_journal_date
@@ -39,13 +39,13 @@ function update_journal_date
   if [ -f $JOURNALDIR/$CURJOURNAL ]
     then
       # Append to journal file
-      echo "$TEMPTIME" >> "$JOURNALDIR/$CURJOURNAL"
+      echo -e "$TEMPTIME" >> "$JOURNALDIR/$CURJOURNAL"
     else
       # Create journal file
       touch $JOURNALDIR/$CURJOURNAL
       echo "Created $JOURNALDIR/$CURJOURNAL"
       echo "$TEMPDATE" > "$JOURNALDIR/$CURJOURNAL"
-      echo "$TEMPTIME" >> "$JOURNALDIR/$CURJOURNAL"
+      echo -e "$TEMPTIME" >> "$JOURNALDIR/$CURJOURNAL"
   fi
 }
 
